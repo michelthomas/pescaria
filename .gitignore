@@ -2,6 +2,7 @@
 node_modules/
 npm-debug.log
 yarn-error.log
+.idea/
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -17,6 +18,7 @@ public_html/hot
 
 storage/*.key
 .env
+.env.backup
 Homestead.yaml
 Homestead.json
 /.vagrant
