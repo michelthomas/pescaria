@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +18,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script> -->
 </head>
 <body>
     <div id="app">
@@ -37,7 +40,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -49,12 +52,26 @@
                                 </li>
                             @endif
                         @else
+                            <!-- Search form -->
+                            <form method="GET" action="{{ route('search') }}"
+                                  class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <input id="search" name="q" class="typeahead form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                                       aria-label="Search" autocomplete="off">
+                                <input type="submit">
+
+                            </form>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile', Auth::user()) }}">
+                                        Ver perfil
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -72,9 +89,39 @@
             </div>
         </nav>
 
+        <!-- <div id="ajaxResults" style="background-color: gray"></div> -->
+
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    <script type="text/javascript">
+        /*$(document).ready(function(e) {
+            $("#search").change(function() {
+                $q = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/search',
+                    data: {'search': $q},
+                    success: function(data) {
+                        console.log(data);
+                        $.each(data, function(key, value) {
+                            $('#ajaxResults').append('<p>'+value.name+'</p>');
+                            // returns 'undefined'
+                        });
+                    }
+                });
+            });
+        });*/
+        /*$('input.typeahead').typeahead(
+        {
+            minLength: 3,
+            source:  function (query, process) {
+                return $.get('/search', { query: query }, function (data) {
+                    return process(data);
+                });
+            }
+        });*/
+    </script>
 </body>
 </html>
