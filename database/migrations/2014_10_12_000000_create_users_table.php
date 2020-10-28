@@ -25,6 +25,23 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('friendship', function (Blueprint $table) {
+            $table->primary(['user_id', 'friend_id']);
+            $table->foreignId('user_id');
+            $table->foreignId('friend_id');
+            $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('friend_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -34,6 +51,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('friendship');
         Schema::dropIfExists('users');
     }
 }
