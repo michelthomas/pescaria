@@ -111,4 +111,9 @@ class User extends Authenticatable
 
         return $this->add_friend($friend_id);
     }
+
+    public function path()
+    {
+        return 'profile/' . $this->id;
+    }
 }
