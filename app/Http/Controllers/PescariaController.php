@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pescaria;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -49,17 +50,17 @@ class PescariaController extends Controller
         $pescaria->user_id = Auth::user()->id;
         $pescaria->open = true;
         $pescaria->save();
+
 /*
         if (request()->has('participantes')) {
 
         }*/
 
-
         $pescaria->participantes()->attach($pescaria->user_id);
         $pescaria->participantes()->attach(request('participantes'));
 
 
-        return redirect(route('pescaria.index'));
+        return redirect(route('home'));
     }
 
     /**
@@ -71,6 +72,39 @@ class PescariaController extends Controller
     {
         return view('pescaria.show', ['pescaria' => $pescaria]);
     }
+
+    public function finish(Pescaria $pescaria)
+    {
+        $pescaria->open = false;
+        $pescaria->save();
+
+        return back();
+    }
+
+    public function podium(Pescaria $pescaria)
+    {
+        $participantes = $pescaria->participantes()->get();
+
+        $qtdPescados = [];
+        foreach ($participantes as $participante) {
+            $qtdPescados[$participante->id] = $pescaria->pescados()->where('user_id', $participante->id)->count();
+        }
+        arsort($qtdPescados);
+
+        $pescadores = [];
+        foreach($qtdPescados as $id => $user) {
+            $pescadores[] = User::find($id);
+        }
+
+        $pescadosMaisPesados = $pescaria->pescados()->orderBy('weight', 'desc')->take(3)->get();
+
+        return view('pescaria.podium', [
+            'pescados_pesados' => $pescadosMaisPesados,
+            'pescadores' => $pescadores,
+            'qtd_Pescados' => $qtdPescados
+        ]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

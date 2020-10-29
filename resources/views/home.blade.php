@@ -3,20 +3,20 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-between">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+        <div>
+            <h2>Pescarias</h2>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            <ul>
+                @forelse($pescarias as $pescaria)
+                    <li><a href="{{ route('pescaria.show', ['pescaria' => $pescaria]) }}">{{ $pescaria->user->name }}. {{ $pescaria->date }}</a></li>
+                @empty
+                    <h5>O usuário não está participando de nenhuma pescaria!</h5>
+                @endforelse
+            </ul>
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+            <a href="{{ route('pescaria.create') }}">
+                <button class="btn btn-primary">Criar pescaria</button>
+            </a>
         </div>
         <div>
             @include('friend_list', ['user' => Auth::user()])

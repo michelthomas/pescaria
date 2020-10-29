@@ -57,9 +57,9 @@
                                   class="form-inline d-flex justify-content-center md-form form-sm mt-0">
 
                                 <i class="fas fa-search" aria-hidden="true"></i>
-                                <input id="search" name="q" class="typeahead form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                                <input id="search" name="q" class="typeahead form-control form-control-sm ml-3 w-75" type="text" placeholder="Pesquisar usuários"
                                        aria-label="Search" autocomplete="off">
-                                <input type="submit">
+
 
                             </form>
 
@@ -89,39 +89,9 @@
             </div>
         </nav>
 
-        <!-- <div id="ajaxResults" style="background-color: gray"></div> -->
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
-    <script type="text/javascript">
-        /*$(document).ready(function(e) {
-            $("#search").change(function() {
-                $q = $(this).val();
-                $.ajax({
-                    type: 'GET',
-                    url: '/search',
-                    data: {'search': $q},
-                    success: function(data) {
-                        console.log(data);
-                        $.each(data, function(key, value) {
-                            $('#ajaxResults').append('<p>'+value.name+'</p>');
-                            // returns 'undefined'
-                        });
-                    }
-                });
-            });
-        });*/
-        /*$('input.typeahead').typeahead(
-        {
-            minLength: 3,
-            source:  function (query, process) {
-                return $.get('/search', { query: query }, function (data) {
-                    return process(data);
-                });
-            }
-        });*/
-    </script>
 </body>
 </html>

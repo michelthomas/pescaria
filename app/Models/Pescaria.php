@@ -21,7 +21,8 @@ class Pescaria extends Model
         'place'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
     public function pescados()
@@ -36,5 +37,10 @@ class Pescaria extends Model
             'pescaria_id',
             'user_id'
         );
+    }
+
+    public function usersByWeight()
+    {
+       // $this->participantes()->where()
     }
 }

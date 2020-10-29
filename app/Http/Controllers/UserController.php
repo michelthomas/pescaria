@@ -94,13 +94,6 @@ class UserController extends Controller
             ->orWhere('email', 'LIKE', '%' . $query . '%')
             ->latest()->get();
 
-        //dd($users);
-
-/*        if($req->ajax()) {
-        return response()->json($users);
-
-        }*/
-
         return view('user.index', compact('users'));
     }
 
