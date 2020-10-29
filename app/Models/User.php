@@ -112,6 +112,21 @@ class User extends Authenticatable
         return $this->add_friend($friend_id);
     }
 
+
+    public function pescarias()
+    {
+        return $this->hasMany(Pescaria::class);
+    }
+
+    public function pescariasParticipando()
+    {
+        return $this->belongsToMany(Pescaria::class,
+            'participantes',
+            'user_id',
+            'pescaria_id'
+        );//->where('participantes.user_id', '!=', $this->id);
+    }
+
     public function path()
     {
         return 'profile/' . $this->id;
